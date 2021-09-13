@@ -9,3 +9,32 @@
 [![release](https://img.shields.io/badge/release-0.2.0-blue.svg)](http://gitlab.incarcloud.com/saic/emo-project/releases)
 
 > Alibaba Sentinel Learning.
+
+## 1 Gradle
+
+```groovy
+dependencies {
+    implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-sentinel"
+}
+```
+
+## 2 Sentinel Dashboard
+
+### 2.1 dashboard
+
+```powershell
+java -jar sentinel-dashboard-1.8.1.jar `
+  --server.port=8710 `
+  --csp.sentinel.dashboard.server=localhost:8710 `
+  --project.name=sentinel-dashboard
+```
+### 2.2 application.yml
+
+```yaml
+spring:
+  cloud:
+    sentinel:
+      transport:
+        port: 8719
+        dashboard: localhost:8710
+```

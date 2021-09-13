@@ -1,5 +1,6 @@
 package com.example.stl.api.test.impl;
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.example.stl.api.test.TestApi;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,7 @@ public class TestController implements TestApi {
 
     @Override
     @GetMapping("/hello")
+    @SentinelResource("hello")
     public String hello() {
         return "hello world";
     }
