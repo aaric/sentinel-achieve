@@ -28,8 +28,11 @@ dependencies {
 java -jar sentinel-dashboard-1.8.1.jar `
   --server.port=8710 `
   --csp.sentinel.dashboard.server=localhost:8710 `
-  --project.name=sentinel-dashboard
+  --project.name=sentinel-dashboard `
+  --auth.username=sentinel `
+  --auth.password=sentinel123
 ```
+
 ### 2.2 application.yml
 
 ```yaml
