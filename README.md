@@ -20,6 +20,8 @@ dependencies {
 
 ## 2 Sentinel Dashboard
 
+> [sentinel-dashboard-1.8.1.jar](https://github.com/alibaba/Sentinel/releases/download/1.8.1/sentinel-dashboard-1.8.1.jar)
+
 ### 2.1 dashboard
 
 ```powershell
