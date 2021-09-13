@@ -1,8 +1,6 @@
 package com.example.stl.api.test.impl;
 
-import com.alibaba.csp.sentinel.Entry;
-import com.alibaba.csp.sentinel.SphU;
-import com.alibaba.csp.sentinel.slots.block.BlockException;
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.alibaba.csp.sentinel.slots.block.RuleConstant;
 import com.alibaba.csp.sentinel.slots.block.flow.FlowRule;
 import com.alibaba.csp.sentinel.slots.block.flow.FlowRuleManager;
@@ -41,14 +39,15 @@ public class TestController implements TestApi {
 
     @Override
     @GetMapping("/hello")
-    //@SentinelResource("hello")
+    @SentinelResource("hello")
     public String hello() {
-        try (Entry entry = SphU.entry("hello")) {
-            return "hello sentinel";
-
-        } catch (BlockException e) {
-            log.error("hello exception", e);
-            return "hello error";
-        }
+//        try (Entry entry = SphU.entry("hello")) {
+//            return "hello sentinel";
+//
+//        } catch (BlockException e) {
+//            log.error("hello exception", e);
+//            return "hello error";
+//        }
+        return "hello sentinel";
     }
 }
