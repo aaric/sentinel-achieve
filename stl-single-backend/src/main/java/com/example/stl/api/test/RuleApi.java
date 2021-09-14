@@ -21,4 +21,8 @@ public interface RuleApi {
 
     @ApiOperation("system")
     boolean system();
+
+    @ApiOperation("authority")
+    boolean authority(@ApiParam(value = "资源名称", example = "annotate") String resName,
+                      @ApiParam(value = "限制IP地址", example = "127.0.0.1") String ipAddress);
 }

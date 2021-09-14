@@ -1,6 +1,8 @@
 package com.example.stl.api.test.impl;
 
 import com.alibaba.csp.sentinel.slots.block.RuleConstant;
+import com.alibaba.csp.sentinel.slots.block.authority.AuthorityRule;
+import com.alibaba.csp.sentinel.slots.block.authority.AuthorityRuleManager;
 import com.alibaba.csp.sentinel.slots.block.degrade.DegradeRule;
 import com.alibaba.csp.sentinel.slots.block.degrade.DegradeRuleManager;
 import com.alibaba.csp.sentinel.slots.block.flow.FlowRule;
@@ -88,6 +90,27 @@ public class RuleController implements RuleApi {
             systemRule.setQps(2);
             rules.add(systemRule);
             SystemRuleManager.loadRules(rules);
+
+            return true;
+
+        } catch (Exception e) {
+            log.error("system exception", e);
+        }
+        return false;
+    }
+
+    @Override
+    @GetMapping("/authority")
+    public boolean authority(@RequestParam String resName, @RequestParam String ipAddress) {
+        try {
+            List<AuthorityRule> rules = new ArrayList<>();
+            AuthorityRule authorityRule = new AuthorityRule()
+                    // 授权类型：黑名单
+                    .setStrategy(RuleConstant.AUTHORITY_BLACK);
+            authorityRule.setLimitApp(ipAddress);
+            authorityRule.setResource(resName);
+            rules.add(authorityRule);
+            AuthorityRuleManager.loadRules(rules);
 
             return true;
 
