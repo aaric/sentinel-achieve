@@ -7,6 +7,9 @@ import com.alibaba.csp.sentinel.slots.block.degrade.DegradeRule;
 import com.alibaba.csp.sentinel.slots.block.degrade.DegradeRuleManager;
 import com.alibaba.csp.sentinel.slots.block.flow.FlowRule;
 import com.alibaba.csp.sentinel.slots.block.flow.FlowRuleManager;
+import com.alibaba.csp.sentinel.slots.block.flow.param.ParamFlowItem;
+import com.alibaba.csp.sentinel.slots.block.flow.param.ParamFlowRule;
+import com.alibaba.csp.sentinel.slots.block.flow.param.ParamFlowRuleManager;
 import com.alibaba.csp.sentinel.slots.system.SystemRule;
 import com.alibaba.csp.sentinel.slots.system.SystemRuleManager;
 import com.example.stl.api.test.RuleApi;
@@ -16,8 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
 
 /**
  * 定义规则模块API接口控制器
@@ -34,15 +36,13 @@ public class RuleController implements RuleApi {
     @GetMapping("/flow")
     public boolean flow(@RequestParam String resName) {
         try {
-            List<FlowRule> rules = new ArrayList<>();
             FlowRule flowRule = new FlowRule()
                     // 限流策略：QPS
                     .setGrade(RuleConstant.FLOW_GRADE_QPS)
                     // 单机阈值
                     .setCount(2);
             flowRule.setResource(resName);
-            rules.add(flowRule);
-            FlowRuleManager.loadRules(rules);
+            FlowRuleManager.loadRules(Collections.singletonList(flowRule));
 
             return true;
 
@@ -56,8 +56,7 @@ public class RuleController implements RuleApi {
     @GetMapping("/degrade")
     public boolean degrade(@RequestParam String resName) {
         try {
-            List<DegradeRule> rules = new ArrayList<>();
-            DegradeRule rtRule = new DegradeRule()
+            DegradeRule degradeRule = new DegradeRule()
                     // 熔断策略: 慢调用比例
                     .setGrade(RuleConstant.DEGRADE_GRADE_RT)
                     // 最大RT响应时间，单位ms
@@ -68,9 +67,8 @@ public class RuleController implements RuleApi {
                     .setTimeWindow(10)
                     // 最小请求数
                     .setMinRequestAmount(1);
-            rtRule.setResource(resName);
-            rules.add(rtRule);
-            DegradeRuleManager.loadRules(rules);
+            degradeRule.setResource(resName);
+            DegradeRuleManager.loadRules(Collections.singletonList(degradeRule));
 
             return true;
 
@@ -84,12 +82,10 @@ public class RuleController implements RuleApi {
     @GetMapping("/system")
     public boolean system() {
         try {
-            List<SystemRule> rules = new ArrayList<>();
             SystemRule systemRule = new SystemRule();
             // 阈值类型：入口 QPS
             systemRule.setQps(2);
-            rules.add(systemRule);
-            SystemRuleManager.loadRules(rules);
+            SystemRuleManager.loadRules(Collections.singletonList(systemRule));
 
             return true;
 
@@ -103,19 +99,39 @@ public class RuleController implements RuleApi {
     @GetMapping("/authority")
     public boolean authority(@RequestParam String resName, @RequestParam String ipAddress) {
         try {
-            List<AuthorityRule> rules = new ArrayList<>();
             AuthorityRule authorityRule = new AuthorityRule()
                     // 授权类型：黑名单
                     .setStrategy(RuleConstant.AUTHORITY_BLACK);
             authorityRule.setLimitApp(ipAddress);
             authorityRule.setResource(resName);
-            rules.add(authorityRule);
-            AuthorityRuleManager.loadRules(rules);
+            AuthorityRuleManager.loadRules(Collections.singletonList(authorityRule));
 
             return true;
 
         } catch (Exception e) {
             log.error("system exception", e);
+        }
+        return false;
+    }
+
+    @Override
+    @GetMapping("/param")
+    public boolean param(@RequestParam String resName, @RequestParam String paramName) {
+        try {
+            ParamFlowRule paramFlowRule = new ParamFlowRule()
+                    .setParamIdx(0)
+                    .setCount(2);
+            ParamFlowItem paramFlowItem = new ParamFlowItem()
+                    .setObject(paramName)
+                    .setClassType(Integer.class.getName());
+            paramFlowRule.setResource(resName);
+            paramFlowRule.setParamFlowItemList(Collections.singletonList(paramFlowItem));
+            ParamFlowRuleManager.loadRules(Collections.singletonList(paramFlowRule));
+
+            return true;
+
+        } catch (Exception e) {
+            log.error("param exception", e);
         }
         return false;
     }

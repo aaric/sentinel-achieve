@@ -2,6 +2,7 @@ package com.example.stl.api.test;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 /**
  * 定义资源模块API接口
@@ -18,9 +19,12 @@ public interface DefineApi {
     @ApiOperation("bool")
     String bool();
 
+    @ApiOperation("async")
+    void async();
+
     @ApiOperation("annotate")
     String annotate();
 
-    @ApiOperation("async")
-    void async();
+    @ApiOperation("param")
+    String param(@ApiParam(value = "ID", example = "1") Integer id);
 }

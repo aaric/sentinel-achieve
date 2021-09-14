@@ -25,4 +25,8 @@ public interface RuleApi {
     @ApiOperation("authority")
     boolean authority(@ApiParam(value = "资源名称", example = "annotate") String resName,
                       @ApiParam(value = "限制IP地址", example = "127.0.0.1") String ipAddress);
+
+    @ApiOperation("param")
+    boolean param(@ApiParam(value = "资源名称", example = "param") String resName,
+                  @ApiParam(value = "参数名称", example = "id") String paramName);
 }

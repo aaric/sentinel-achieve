@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.PostConstruct;
@@ -69,22 +70,6 @@ public class DefineController implements DefineApi {
     }
 
     @Override
-    @GetMapping("/annotate")
-    @SentinelResource(value = "annotate", entryType = EntryType.IN, blockHandler = "annotateBlockHandler")
-    public String annotate() {
-        try {
-            TimeUnit.MILLISECONDS.sleep(200);
-        } catch (InterruptedException e) {
-            log.error("annotate exception", e);
-        }
-        return "sentinel annotate";
-    }
-
-    public String annotateBlockHandler(BlockException e) {
-        return "sentinel annotate block error";
-    }
-
-    @Override
     @GetMapping("/async")
     public void async() {
         try (AsyncEntry entry = SphU.asyncEntry("async")) {
@@ -106,5 +91,28 @@ public class DefineController implements DefineApi {
         } catch (InterruptedException e) {
             log.error("doAsync exception", e);
         }
+    }
+
+    @Override
+    @GetMapping("/annotate")
+    @SentinelResource(value = "annotate", entryType = EntryType.IN, blockHandler = "annotateBlockHandler")
+    public String annotate() {
+        try {
+            TimeUnit.MILLISECONDS.sleep(200);
+        } catch (InterruptedException e) {
+            log.error("annotate exception", e);
+        }
+        return "sentinel annotate";
+    }
+
+    public String annotateBlockHandler(BlockException e) {
+        return "sentinel annotate block error";
+    }
+
+    @Override
+    @GetMapping("/param")
+    @SentinelResource(value = "param", entryType = EntryType.IN, blockHandler = "annotateBlockHandler")
+    public String param(@RequestParam(required = false) Integer id) {
+        return "sentinel param";
     }
 }
