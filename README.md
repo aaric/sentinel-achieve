@@ -6,7 +6,7 @@
 [![java](https://img.shields.io/badge/java-1.8-brightgreen.svg?style=flat&logo=java)](https://www.oracle.com/java/technologies/javase-downloads.html)
 [![spring boot](https://img.shields.io/badge/springboot-2.3.2-brightgreen.svg?style=flat&logo=springboot)](https://docs.spring.io/spring-boot/docs/2.3.2.RELEASE/reference/htmlsingle/)
 [![spring cloud alibaba](https://img.shields.io/badge/springcloud.alibaba-2.2.6-brightgreen.svg?style=flat&logo=alibabacloud)](https://spring-cloud-alibaba-group.github.io/github-pages/hoxton/zh-cn/index.html)
-[![release](https://img.shields.io/badge/release-0.2.0-blue.svg)](http://gitlab.incarcloud.com/saic/emo-project/releases)
+[![release](https://img.shields.io/badge/release-0.3.0-blue.svg)](http://gitlab.incarcloud.com/saic/emo-project/releases)
 
 > Alibaba Sentinel Learning.
 

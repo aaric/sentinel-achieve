@@ -1,0 +1,83 @@
+# Undertow settings
+server:
+  port: ${SERVER_PORT:8000}
+  undertow:
+    threads:
+      io: ${UNDERTOW_IO_THREADS:1}
+      worker: ${UNDERTOW_WORKER_THREADS:8}
+    buffer-size: ${UNDERTOW_BUFFER_SIZE:1024}
+
+# Management settings
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  metrics:
+    tags:
+      application: ${spring.application.name}
+  health:
+    elasticsearch:
+      enabled: false
+
+# Logging settings
+logging:
+  level:
+    root: ERROR
+    org:
+      springframework:
+        web: ERROR
+        security: INFO
+        boot: INFO
+      hibernate: INFO
+    com:
+      incarcloud: DEBUG
+  file:
+    path: ${LOGGING_FILE_PATH:./}
+    name: output.log
+    max-size: ${LOGGING_FILE_MAX_SIZE:100MB}
+    max-history: ${LOGGING_FILE_MAX_HISTORY:50}
+
+# Knife4j settings
+knife4j:
+  enable: true
+  setting:
+    enableOpenApi: false
+    enableFooterCustom: true
+    footerCustomContent: 版权所有 | Copyright 2021
+  document:
+    title: 在线API文档
+    description: Alibaba Sentinel 框架集成测试 - gateway应用
+    version: 0.3.0
+    developer:
+      name: Aaric
+      url: http://github.com/aaric
+      email: vipaaric@gmail.com
+
+# Spring settings
+spring:
+  profiles:
+    active: dev
+  application:
+    name: stl-cloud-gateway-backend
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${NACOS_SERVER_ADDR:10.0.11.21:8848}
+        namespace: ${NACOS_NAMESPACE:public}
+        group: ${NACOS_GROUP:DEFAULT_GROUP}
+      config:
+        server-addr: ${NACOS_SERVER_ADDR:10.0.11.21:8848}
+        file-extension: yaml
+        namespace: ${NACOS_NAMESPACE:public}
+        group: ${NACOS_GROUP:DEFAULT_GROUP}
+#        ext-config:
+#          - data-id: stl-spring-datasource.yaml
+#            group: ${spring.cloud.nacos.config.group}
+#            refresh: true
+#          - data-id: stl-spring-redis.yaml
+#            group: ${spring.cloud.nacos.config.group}
+#            refresh: true

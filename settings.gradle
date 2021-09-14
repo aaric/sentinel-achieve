@@ -7,3 +7,7 @@ pluginManagement {
 rootProject.name = "sentinel-achieve"
 
 include "stl-single-backend"
+include "stl-cloud-abc-api"
+include "stl-cloud-abc-backend"
+include "stl-cloud-client-backend"
+include "stl-cloud-gateway-backend"
