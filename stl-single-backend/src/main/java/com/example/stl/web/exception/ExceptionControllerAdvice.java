@@ -1,6 +1,7 @@
 package com.example.stl.web.exception;
 
 import com.alibaba.csp.sentinel.slots.block.BlockException;
+import com.alibaba.csp.sentinel.slots.block.flow.FlowException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -26,10 +27,24 @@ public class ExceptionControllerAdvice {
      */
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
+    @ExceptionHandler(FlowException.class)
+    public String handleFlowException(FlowException e) {
+        log.error("handleFlowException", e);
+        return "sentinel flow error";
+    }
+
+    /**
+     * 流量异常
+     *
+     * @param e 异常信息
+     * @return
+     */
+    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
     @ExceptionHandler(BlockException.class)
     public String handleBlockException(BlockException e) {
         log.error("handleBlockException", e);
-        return "sentinel qps error";
+        return "sentinel block error";
     }
 
     /**
