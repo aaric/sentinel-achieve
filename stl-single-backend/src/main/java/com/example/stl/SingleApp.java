@@ -2,6 +2,7 @@ package com.example.stl;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
  * 测试单体应用
@@ -10,6 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @version 0.1.0-SNAPSHOT
  */
 @SpringBootApplication
+@EnableAsync
 public class SingleApp {
 
     /**
