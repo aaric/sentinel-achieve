@@ -18,4 +18,7 @@ public interface RuleApi {
 
     @ApiOperation("degrade")
     boolean degrade(@ApiParam(value = "资源名称", example = "annotate") String resName);
+
+    @ApiOperation("system")
+    boolean system();
 }
