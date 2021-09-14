@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 定义限流模块API接口控制器
+ * 定义资源模块API接口控制器
  *
  * @author Aaric, created on 2021-09-13T14:55.
  * @version 0.2.0-SNAPSHOT
@@ -75,11 +75,16 @@ public class DefineController implements DefineApi {
     @GetMapping("/annotate")
     @SentinelResource(value = "annotate", blockHandler = "annotateBlockHandler")
     public String annotate() {
+        try {
+            TimeUnit.MILLISECONDS.sleep(200);
+        } catch (InterruptedException e) {
+            log.error("annotate exception", e);
+        }
         return "sentinel annotate";
     }
 
     public String annotateBlockHandler(BlockException e) {
-        return "sentinel annotate error";
+        return "sentinel annotate block error";
     }
 
     @Override

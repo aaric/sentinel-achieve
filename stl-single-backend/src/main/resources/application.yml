@@ -51,7 +51,7 @@ knife4j:
   document:
     title: 在线API文档
     description: Alibaba Sentinel 框架集成测试
-    version: 0.2.0
+    version: 0.3.0
     developer:
       name: Aaric
       url: https://github.com/aaric
