@@ -96,6 +96,10 @@ spring:
 #          uri: lb://stl-cloud-client-backend
 #          predicates:
 #            - Path=/api/client/**
+    sentinel:
+      transport:
+        port: ${SENTINEL_TRANSPORT_PORT:8719}
+        dashboard: ${sentinel_transport_dashboard:localhost:8710}
 
 # Zuul settings
 zuul:

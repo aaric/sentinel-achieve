@@ -16,7 +16,9 @@ dependencies {
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config"
 
     implementation "org.springframework.cloud:spring-cloud-starter-netflix-zuul"
-//    implementation "com.alibaba.csp:sentinel-zuul-adapter"
 //    implementation "org.springframework.cloud:spring-cloud-starter-gateway"
+
+    implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-sentinel"
+    implementation "com.alibaba.csp:sentinel-zuul-adapter"
 //    implementation "com.alibaba.csp:sentinel-spring-cloud-gateway-adapter"
 }
