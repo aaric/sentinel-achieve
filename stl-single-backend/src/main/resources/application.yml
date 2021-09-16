@@ -63,8 +63,13 @@ spring:
     active: dev
   application:
     name: stl-single-backend
+  redis:
+    host: ${REDIS_HOST:127.0.0.1}
+    port: ${REDIS_PORT:6379}
+    password: ${REDIS_PASSWORD:redis}
+    database: ${REDIS_DATABASE:0}
   cloud:
     sentinel:
       transport:
-        port: 8719
-        dashboard: localhost:8710
+        port: ${SENTINEL_TRANSPORT_PORT:8719}
+        dashboard: ${sentinel_transport_dashboard:localhost:8710}
