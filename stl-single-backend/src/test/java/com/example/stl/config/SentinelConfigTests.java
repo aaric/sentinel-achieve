@@ -37,7 +37,7 @@ public class SentinelConfigTests {
 //                .withDatabase(redisDatabase)
 //                .withTimeout(Duration.of(15, ChronoUnit.SECONDS))
 //                .build();
-        RedisClient client = RedisClient.create("redis://redis2019@10.0.11.23:6379/9?timeout=15s");
+        RedisClient client = RedisClient.create("redis://redis@127.0.0.1:6379/0?timeout=15s");
         StatefulRedisPubSubConnection<String, String> connection = client.connectPubSub();
         RedisPubSubCommands<String, String> subCommands = connection.sync();
         String value = encoder.convert(rules);
