@@ -69,6 +69,7 @@ spring:
         server-addr: ${NACOS_SERVER_ADDR:10.0.11.21:8848}
         namespace: ${NACOS_NAMESPACE:public}
         group: ${NACOS_GROUP:DEFAULT_GROUP}
+        register-enabled: false
       config:
         server-addr: ${NACOS_SERVER_ADDR:10.0.11.21:8848}
         file-extension: yaml
@@ -81,3 +82,28 @@ spring:
 #          - data-id: stl-spring-redis.yaml
 #            group: ${spring.cloud.nacos.config.group}
 #            refresh: true
+#    gateway:
+#      enabled: true
+#      discovery:
+#        locator:
+#          lower-case-service-id: true
+#      routes:
+#        - id: stl-cloud-abc-backend
+#          uri: lb://stl-cloud-abc-backend
+#          predicates:
+#            - Path=/api/abc/**
+#        - id: stl-cloud-client-backend
+#          uri: lb://stl-cloud-client-backend
+#          predicates:
+#            - Path=/api/client/**
+
+# Zuul settings
+zuul:
+  sensitive-headers: Cookie,Set-Cookie
+  routes:
+    stl-cloud-abc-backend:
+      path: /api/abc/**
+      service-id: stl-cloud-abc-backend
+    stl-cloud-client-backend:
+      path: /api/client/**
+      service-id: stl-cloud-client-backend
