@@ -1,6 +1,6 @@
 # Undertow settings
 server:
-  port: ${SERVER_PORT:8080}
+  port: ${SERVER_PORT:8100}
   undertow:
     threads:
       io: ${UNDERTOW_IO_THREADS:1}
@@ -34,7 +34,7 @@ logging:
         boot: INFO
       hibernate: INFO
     com:
-      example: DEBUG
+      incarcloud: DEBUG
   file:
     path: ${LOGGING_FILE_PATH:./}
     name: output.log
@@ -50,11 +50,11 @@ knife4j:
     footerCustomContent: 版权所有 | Copyright 2021
   document:
     title: 在线API文档
-    description: Alibaba Sentinel 框架集成测试
+    description: Alibaba Sentinel 框架集成测试 - abc应用
     version: 0.3.0
     developer:
       name: Aaric
-      url: https://github.com/aaric
+      url: http://github.com/aaric
       email: vipaaric@gmail.com
 
 # Spring settings
@@ -62,14 +62,35 @@ spring:
   profiles:
     active: dev
   application:
-    name: stl-single-backend
+    name: stl-cloud-abc-backend
   redis:
-    host: ${REDIS_HOST:127.0.0.1}
-    port: ${REDIS_PORT:6379}
-    password: ${REDIS_PASSWORD:redis}
+    #host: ${REDIS_HOST:127.0.0.1}
+    #port: ${REDIS_PORT:6379}
+    #password: ${REDIS_PASSWORD:redis}
     database: ${REDIS_DATABASE:0}
   cloud:
+    nacos:
+      discovery:
+        server-addr: ${NACOS_SERVER_ADDR:10.0.11.21:8848}
+        namespace: ${NACOS_NAMESPACE:public}
+        group: ${NACOS_GROUP:DEFAULT_GROUP}
+      config:
+        server-addr: ${NACOS_SERVER_ADDR:10.0.11.21:8848}
+        file-extension: yaml
+        namespace: ${NACOS_NAMESPACE:public}
+        group: ${NACOS_GROUP:DEFAULT_GROUP}
+        ext-config:
+          - data-id: stl-spring-redis.yaml
+            group: ${spring.cloud.nacos.config.group}
+            refresh: true
+          - data-id: stl-spring-sentinel.yaml
+            group: ${spring.cloud.nacos.config.group}
+            refresh: true
     sentinel:
       transport:
         port: ${SENTINEL_TRANSPORT_PORT:8719}
-        dashboard: ${sentinel_transport_dashboard:localhost:8710}
+        #dashboard: ${SENTINEL_TRANSPORT_DASHBOARD:localhost:8710}
+
+# Abc settings
+abc:
+  data-id: stl-cloud-abc-backend
