@@ -24,6 +24,8 @@ dependencies {
 
 ### 2.1 dashboard
 
+#### 2.1.1 Windows
+
 ```powershell
 java -jar sentinel-dashboard-1.8.1.jar `
   --server.port=8710 `
@@ -31,6 +33,19 @@ java -jar sentinel-dashboard-1.8.1.jar `
   --project.name=sentinel-dashboard `
   --auth.username=sentinel `
   --auth.password=sentinel123
+```
+
+#### 2.1.2 Linux
+
+```base
+nohup \
+java -jar sentinel-dashboard-1.8.1.jar \
+  --server.port=8710 \
+  --csp.sentinel.dashboard.server=localhost:8710 \
+  --project.name=sentinel-dashboard \
+  --auth.username=sentinel \
+  --auth.password=sentinel123 \
+  > /dev/null 2>&1 &
 ```
 
 ### 2.2 application.yml

@@ -28,5 +28,6 @@ public interface RuleApi {
 
     @ApiOperation("param")
     boolean param(@ApiParam(value = "资源名称", example = "param") String resName,
-                  @ApiParam(value = "参数名称", example = "id") String paramName);
+                  @ApiParam(value = "热点参数Index", example = "0") Integer paramIndex,
+                  @ApiParam(value = "热点参数值", example = "1") String paramValue);
 }

@@ -116,14 +116,15 @@ public class RuleController implements RuleApi {
 
     @Override
     @GetMapping("/param")
-    public boolean param(@RequestParam String resName, @RequestParam String paramName) {
+    public boolean param(@RequestParam String resName, @RequestParam Integer paramIndex, @RequestParam String paramValue) {
         try {
             ParamFlowRule paramFlowRule = new ParamFlowRule()
-                    .setParamIdx(0)
-                    .setCount(2);
+                    .setParamIdx(paramIndex)
+                    .setCount(10);
             ParamFlowItem paramFlowItem = new ParamFlowItem()
-                    .setObject(paramName)
-                    .setClassType(Integer.class.getName());
+                    .setClassType(Integer.class.getName())
+                    .setObject(paramValue)
+                    .setCount(2);
             paramFlowRule.setResource(resName);
             paramFlowRule.setParamFlowItemList(Collections.singletonList(paramFlowItem));
             ParamFlowRuleManager.loadRules(Collections.singletonList(paramFlowRule));
