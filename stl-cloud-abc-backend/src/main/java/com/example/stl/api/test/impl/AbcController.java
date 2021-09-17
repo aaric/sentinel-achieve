@@ -1,5 +1,6 @@
 package com.example.stl.api.test.impl;
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.example.stl.api.test.AbcApi;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,7 @@ public class AbcController implements AbcApi {
 
     @Override
     @GetMapping("/echo")
+    @SentinelResource("abc-echo")
     public String echo() {
         return "echo";
     }

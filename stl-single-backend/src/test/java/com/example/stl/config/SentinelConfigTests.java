@@ -4,6 +4,7 @@ import com.alibaba.csp.sentinel.datasource.Converter;
 import com.alibaba.csp.sentinel.slots.block.RuleConstant;
 import com.alibaba.csp.sentinel.slots.block.flow.FlowRule;
 import com.alibaba.fastjson.JSON;
+import com.example.stl.config.sentinel.Register2PropertyUtil;
 import io.lettuce.core.RedisClient;
 import io.lettuce.core.pubsub.StatefulRedisPubSubConnection;
 import io.lettuce.core.pubsub.api.sync.RedisPubSubCommands;
@@ -42,8 +43,8 @@ public class SentinelConfigTests {
         RedisPubSubCommands<String, String> subCommands = connection.sync();
         String value = encoder.convert(rules);
         subCommands.multi();
-        subCommands.set(SentinelConfig.SENTINEL_FLOW_RULE_KEY, value);
-        subCommands.publish(SentinelConfig.SENTINEL_FLOW_RULE_CHANNEL, value);
+        subCommands.set(Register2PropertyUtil.SENTINEL_FLOW_RULE_KEY, value);
+        subCommands.publish(Register2PropertyUtil.SENTINEL_FLOW_RULE_CHANNEL, value);
         subCommands.exec();
     }
 

@@ -63,6 +63,11 @@ spring:
     active: dev
   application:
     name: stl-cloud-gateway-backend
+  redis:
+    #host: ${REDIS_HOST:127.0.0.1}
+    #port: ${REDIS_PORT:6379}
+    #password: ${REDIS_PASSWORD:redis}
+    database: ${REDIS_DATABASE:0}
   cloud:
     nacos:
       discovery:
@@ -76,6 +81,9 @@ spring:
         namespace: ${NACOS_NAMESPACE:public}
         group: ${NACOS_GROUP:DEFAULT_GROUP}
         ext-config:
+          - data-id: stl-spring-redis.yaml
+            group: ${spring.cloud.nacos.config.group}
+            refresh: true
           - data-id: stl-spring-sentinel.yaml
             group: ${spring.cloud.nacos.config.group}
             refresh: true
@@ -96,7 +104,7 @@ spring:
     sentinel:
       transport:
         port: ${SENTINEL_TRANSPORT_PORT:8719}
-#        dashboard: ${SENTINEL_TRANSPORT_DASHBOARD:localhost:8710}
+        #dashboard: ${SENTINEL_TRANSPORT_DASHBOARD:localhost:8710}
 
 # Zuul settings
 zuul:

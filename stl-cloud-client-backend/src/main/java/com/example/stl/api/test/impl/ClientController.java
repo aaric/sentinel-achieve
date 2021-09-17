@@ -1,5 +1,6 @@
 package com.example.stl.api.test.impl;
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.example.stl.api.test.ClientApi;
 import com.example.stl.api.test.feign.AbcApiFeign;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +25,7 @@ public class ClientController implements ClientApi {
 
     @Override
     @GetMapping("/httpEcho")
+    @SentinelResource("client-http-echo")
     public String httpEcho() {
         String echo = abcApiFeign.echo();
         log.info("echo: {}", echo);

@@ -71,10 +71,10 @@
 <!--        <module name="LineLength">-->
 <!--            <property name="max" value="140"/>-->
 <!--        </module>-->
-        <!-- 方法不超过100(50)行 -->
+        <!-- 方法不超过50行 -->
         <module name="MethodLength">
             <property name="tokens" value="METHOD_DEF"/>
-            <property name="max" value="100"/>
+            <property name="max" value="50"/>
         </module>
         <!-- 方法的参数个数不超过10(5)个。 并且不对构造方法进行检查-->
         <module name="ParameterNumber">

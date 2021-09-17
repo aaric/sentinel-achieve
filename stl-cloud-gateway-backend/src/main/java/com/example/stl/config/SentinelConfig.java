@@ -58,6 +58,9 @@ public class SentinelConfig implements ApplicationRunner {
         // AuthorityRule
         Register2PropertyUtil.register2AuthorityRules(redisConnectionConfig);
 
+        // GatewayFlowRule
+        Register2PropertyUtil.register2GatewayFlowRules(redisConnectionConfig);
+
         // log something
         log.info("sentinel rules loaded...");
     }

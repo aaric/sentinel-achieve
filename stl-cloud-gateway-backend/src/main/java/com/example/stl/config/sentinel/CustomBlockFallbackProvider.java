@@ -26,33 +26,38 @@ public class CustomBlockFallbackProvider implements ZuulBlockFallbackProvider {
 
     @Override
     public BlockResponse fallbackResponse(String route, Throwable cause) {
+        BlockResponse response = null;
+
         if (cause instanceof FlowException) {
             log.error("fallback: sentinel flow exception, route={}", route);
-            return new BlockResponse(501, "sentinel flow exception", route);
+            response = new BlockResponse(501, "sentinel flow exception", route);
 
         } else if (cause instanceof ParamFlowException) {
             log.error("fallback: sentinel param flow exception, route={}", route);
-            return new BlockResponse(501, "sentinel param flow exception", route);
+            response = new BlockResponse(501, "sentinel param flow exception", route);
 
         } else if (cause instanceof DegradeException) {
             log.error("fallback: sentinel degrade exception, route={}", route);
-            return new BlockResponse(501, "sentinel degrade exception", route);
+            response = new BlockResponse(501, "sentinel degrade exception", route);
 
         } else if (cause instanceof AuthorityException) {
             log.error("fallback: sentinel authority exception, route={}", route);
-            return new BlockResponse(501, "sentinel authority exception", route);
+            response = new BlockResponse(501, "sentinel authority exception", route);
 
         } else if (cause instanceof SystemBlockException) {
             log.error("fallback: sentinel system block exception, route={}", route);
-            return new BlockResponse(501, "sentinel system block exception", route);
+            response = new BlockResponse(501, "sentinel system block exception", route);
 
         } else if (cause instanceof BlockException) {
             log.error("fallback: sentinel block exception, route={}", route);
-            return new BlockResponse(501, "sentinel block exception", route);
+            response = new BlockResponse(501, "sentinel block exception", route);
 
         } else {
             log.error("fallback: sentinel error, route={}", route);
-            return new BlockResponse(503, "sentinel error", route);
+            response = new BlockResponse(503, "sentinel error", route);
         }
+
+        // return
+        return response;
     }
 }
