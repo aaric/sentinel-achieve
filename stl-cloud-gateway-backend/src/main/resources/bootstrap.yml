@@ -75,13 +75,10 @@ spring:
         file-extension: yaml
         namespace: ${NACOS_NAMESPACE:public}
         group: ${NACOS_GROUP:DEFAULT_GROUP}
-#        ext-config:
-#          - data-id: stl-spring-datasource.yaml
-#            group: ${spring.cloud.nacos.config.group}
-#            refresh: true
-#          - data-id: stl-spring-redis.yaml
-#            group: ${spring.cloud.nacos.config.group}
-#            refresh: true
+        ext-config:
+          - data-id: stl-spring-sentinel.yaml
+            group: ${spring.cloud.nacos.config.group}
+            refresh: true
 #    gateway:
 #      enabled: true
 #      discovery:
@@ -99,7 +96,7 @@ spring:
     sentinel:
       transport:
         port: ${SENTINEL_TRANSPORT_PORT:8719}
-        dashboard: ${sentinel_transport_dashboard:localhost:8710}
+#        dashboard: ${SENTINEL_TRANSPORT_DASHBOARD:localhost:8710}
 
 # Zuul settings
 zuul:
