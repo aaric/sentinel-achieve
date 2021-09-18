@@ -2,11 +2,16 @@ package com.example.stl.config;
 
 import com.alibaba.csp.sentinel.datasource.redis.config.RedisConnectionConfig;
 import com.example.stl.config.sentinel.Register2PropertyUtil;
+import io.lettuce.core.RedisURI;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 
 /**
  * Sentinel 配置
@@ -32,6 +37,17 @@ public class SentinelConfig implements ApplicationRunner {
 
     @Value("${spring.redis.database}")
     private Integer redisDatabase;
+
+    @Bean
+    RedisURI redisUri() {
+        return RedisURI.builder()
+                .withHost(redisHost)
+                .withPort(redisPort)
+                .withPassword(redisPassword)
+                .withDatabase(redisDatabase)
+                .withTimeout(Duration.of(15, ChronoUnit.SECONDS))
+                .build();
+    }
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
