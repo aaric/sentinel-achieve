@@ -29,7 +29,6 @@ dependencies {
 ```powershell
 java -jar sentinel-dashboard-1.8.1.jar `
   --server.port=8710 `
-  --csp.sentinel.dashboard.server=localhost:8710 `
   --project.name=sentinel-dashboard `
   --auth.username=sentinel `
   --auth.password=sentinel123
@@ -41,7 +40,6 @@ java -jar sentinel-dashboard-1.8.1.jar `
 nohup \
 java -jar sentinel-dashboard-1.8.1.jar \
   --server.port=8710 \
-  --csp.sentinel.dashboard.server=localhost:8710 \
   --project.name=sentinel-dashboard \
   --auth.username=sentinel \
   --auth.password=sentinel123 \
