@@ -14,7 +14,7 @@ data:
   NACOS_SERVER_ADDR: 10.0.11.21:8848
   NACOS_NAMESPACE: public
   NACOS_GROUP: DEFAULT_GROUP
-  JAVA_TOOL_OPTIONS: -javaagent:/usr/skywalking/agent/skywalking-agent.jar
+#  JAVA_TOOL_OPTIONS: -javaagent:/usr/skywalking/agent/skywalking-agent.jar
   SW_AGENT_COLLECTOR_BACKEND_SERVICES: 10.0.11.21:11800
 ---
 apiVersion: apps/v1
@@ -50,6 +50,8 @@ spec:
             - configMapRef:
                 name: project-env
           env:
+            - name: JAVA_TOOL_OPTIONS
+              value: -javaagent:/usr/skywalking/agent/skywalking-agent.jar
             - name: SW_AGENT_NAME
               value: stl-cloud-abc-backend
           ports:
