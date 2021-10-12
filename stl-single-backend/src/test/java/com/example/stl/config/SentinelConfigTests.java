@@ -6,12 +6,14 @@ import com.alibaba.csp.sentinel.slots.block.flow.FlowRule;
 import com.alibaba.fastjson.JSON;
 import com.example.stl.config.sentinel.Register2PropertyUtil;
 import io.lettuce.core.RedisClient;
+import io.lettuce.core.RedisURI;
 import io.lettuce.core.pubsub.StatefulRedisPubSubConnection;
 import io.lettuce.core.pubsub.api.sync.RedisPubSubCommands;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -30,15 +32,12 @@ import java.util.List;
 @ExtendWith(SpringExtension.class)
 public class SentinelConfigTests {
 
+    @Autowired
+    private RedisURI redisUri;
+
     private <T> void pushRules(List<T> rules, Converter<List<T>, String> encoder) {
-//        RedisURI uri = RedisURI.builder()
-//                .withHost(redisHost)
-//                .withPort(redisPort)
-//                .withPassword(redisPassword)
-//                .withDatabase(redisDatabase)
-//                .withTimeout(Duration.of(15, ChronoUnit.SECONDS))
-//                .build();
-        RedisClient client = RedisClient.create("redis://redis@127.0.0.1:6379/0?timeout=15s");
+        //RedisClient client = RedisClient.create("redis://redis@127.0.0.1:6379/0?timeout=15s");
+        RedisClient client = RedisClient.create(redisUri);
         StatefulRedisPubSubConnection<String, String> connection = client.connectPubSub();
         RedisPubSubCommands<String, String> subCommands = connection.sync();
         String value = encoder.convert(rules);
