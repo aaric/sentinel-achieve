@@ -28,7 +28,7 @@ public class ClientController implements ClientApi {
     @SentinelResource("client-http-echo")
     public String httpEcho() {
         String echo = abcApiFeign.echo();
-        log.info("echo: {}", echo);
+        log.info("client -> echo: {}", echo);
         return "http: " + echo;
     }
 }

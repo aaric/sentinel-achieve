@@ -73,6 +73,8 @@ subprojects {
             dependency "mysql:mysql-connector-java:8.0.26"
             dependency "com.alibaba:druid-spring-boot-starter:1.1.24"
             dependency "com.baomidou:mybatis-plus-boot-starter:3.4.3.2"
+
+            dependency "org.apache.skywalking:apm-toolkit-logback-1.x:8.7.0"
         }
     }
 
