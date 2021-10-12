@@ -1,0 +1,109 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: harbor
+data:
+  .dockerconfigjson: ewoJImF1dGhzIjogewoJCSJzMTo1MDAwIjogewoJCQkiYXV0aCI6ICJhbVZ1YTJsdWN6cHFaVzVyYVc1elFESXdNakZKWXc9PSIKCQl9Cgl9Cn0=
+type: kubernetes.io/dockerconfigjson
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: project-env
+data:
+  NACOS_SERVER_ADDR: 10.0.11.21:8848
+  NACOS_NAMESPACE: public
+  NACOS_GROUP: DEFAULT_GROUP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stl-cloud-abc-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stl-cloud-abc-backend
+  template:
+    metadata:
+      labels:
+        app: stl-cloud-abc-backend
+    spec:
+      containers:
+        - name: stl-cloud-abc-backend
+          image: s1:5000/dev/stl-cloud-abc-backend:latest
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: project-env
+          ports:
+            - containerPort: 8100
+      imagePullSecrets:
+        - name: harbor
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stl-cloud-client-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stl-cloud-client-backend
+  template:
+    metadata:
+      labels:
+        app: stl-cloud-client-backend
+    spec:
+      containers:
+        - name: stl-cloud-client-backend
+          image: s1:5000/dev/stl-cloud-client-backend:latest
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: project-env
+          ports:
+            - containerPort: 8200
+      imagePullSecrets:
+        - name: harbor
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stl-cloud-gateway-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stl-cloud-gateway-backend
+  template:
+    metadata:
+      labels:
+        app: stl-cloud-gateway-backend
+    spec:
+      containers:
+        - name: stl-cloud-client-backend
+          image: s1:5000/dev/stl-cloud-gateway-backend:latest
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: project-env
+          ports:
+            - containerPort: 8000
+      imagePullSecrets:
+        - name: harbor
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: stl-cloud-gateway-backend
+spec:
+  selector:
+    app: stl-cloud-gateway-backend
+  type: NodePort
+  ports:
+    - name: http
+      port: 8000
+      targetPort: 8000
+      nodePort: 30800
