@@ -54,8 +54,6 @@ spec:
               value: stl-cloud-abc-backend
           ports:
             - containerPort: 8100
-          args:
-            -
       volumes:
         - name: sw-agent
           emptyDir: {}
