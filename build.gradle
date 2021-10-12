@@ -107,11 +107,9 @@ subprojects {
         def subProjectPath = project.projectDir
         if (null != subProjectPath) {
             subProjectPath.list().each { filename ->
-                if (filename.endsWith(".log")) {
-                    def logFile = new File(subProjectPath, filename)
-                    if (logFile.exists()) {
-                        logFile.delete()
-                    }
+                if (filename.endsWith(".log") || filename.equals("logs")) {
+                    def logPath = new File(subProjectPath, filename)
+                    logPath.deleteOnExit()
                 }
             }
         }
