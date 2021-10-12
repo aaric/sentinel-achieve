@@ -14,6 +14,7 @@ data:
   NACOS_SERVER_ADDR: 10.0.11.21:8848
   NACOS_NAMESPACE: public
   NACOS_GROUP: DEFAULT_GROUP
+  JAVA_TOOL_OPTIONS: -javaagent:/usr/skywalking/agent/skywalking-agent.jar
   SW_AGENT_COLLECTOR_BACKEND_SERVICES: 10.0.11.21:11800
 ---
 apiVersion: apps/v1
@@ -30,15 +31,34 @@ spec:
       labels:
         app: stl-cloud-abc-backend
     spec:
+      initContainers:
+        - name: skywalking-agent-sidecar
+          image: s1:5000/apache/skywalking-agent-sidecar:8.7.0
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: sw-agent
+              mountPath: /skywalking/agent
+          command: ["/bin/sh", "-c", "mkdir -p /skywalking/agent && cp -r /usr/skywalking/agent/* /skywalking/agent"]
       containers:
         - name: stl-cloud-abc-backend
           image: s1:5000/dev/stl-cloud-abc-backend:latest
           imagePullPolicy: Always
+          volumeMounts:
+            - name: sw-agent
+              mountPath: /usr/skywalking/agent
           envFrom:
             - configMapRef:
                 name: project-env
+          env:
+            - name: SW_AGENT_NAME
+              value: stl-cloud-abc-backend
           ports:
             - containerPort: 8100
+          args:
+            -
+      volumes:
+        - name: sw-agent
+          emptyDir: {}
       imagePullSecrets:
         - name: harbor
 ---
