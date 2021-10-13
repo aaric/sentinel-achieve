@@ -3,7 +3,7 @@ kind: Secret
 metadata:
   name: harbor
 data:
-  .dockerconfigjson: ewoJImF1dGhzIjogewoJCSJzMTo1MDAwIjogewoJCQkiYXV0aCI6ICJhbVZ1YTJsdWN6cHFaVzVyYVc1elFESXdNakZKWXc9PSIKCQl9Cgl9Cn0=
+  .dockerconfigjson: ${DOCKER_CFG_DATA}
 type: kubernetes.io/dockerconfigjson
 ---
 apiVersion: v1
@@ -11,13 +11,13 @@ kind: ConfigMap
 metadata:
   name: project-env
 data:
-  NACOS_SERVER_ADDR: 10.0.11.21:8848
+  NACOS_SERVER_ADDR: 127.0.0.1:8848
   NACOS_NAMESPACE: public
   NACOS_GROUP: DEFAULT_GROUP
   SENTINEL_TRANSPORT_DASHBOARD: "sentinel-dashboard:8710"
   JAVA_TOOL_OPTIONS: -javaagent:/usr/skywalking/agent/skywalking-agent.jar
-  SW_AGENT_COLLECTOR_BACKEND_SERVICES: 10.0.11.21:11800
-  SW_GRPC_LOG_SERVER_HOST: 10.0.11.21
+  SW_AGENT_COLLECTOR_BACKEND_SERVICES: 127.0.0.1:11800
+  SW_GRPC_LOG_SERVER_HOST: 127.0.0.1
   SW_GRPC_LOG_SERVER_PORT: "11800"
 ---
 apiVersion: apps/v1
@@ -36,7 +36,7 @@ spec:
     spec:
       containers:
         - name: stl-cloud-client-backend
-          image: s1:5000/alibaba/sentinel-dashboard:1.8.1
+          image: ik8share/sentinel-dashboard:1.8.1
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8710
@@ -73,7 +73,7 @@ spec:
     spec:
       initContainers:
         - name: skywalking-agent-sidecar
-          image: s1:5000/apache/skywalking-agent-sidecar:8.7.0
+          image: ik8share/skywalking-agent-sidecar:8.7.0
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: sw-agent
@@ -116,7 +116,7 @@ spec:
     spec:
       initContainers:
         - name: skywalking-agent-sidecar
-          image: s1:5000/apache/skywalking-agent-sidecar:8.7.0
+          image: ik8share/skywalking-agent-sidecar:8.7.0
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: sw-agent
@@ -159,7 +159,7 @@ spec:
     spec:
       initContainers:
         - name: skywalking-agent-sidecar
-          image: s1:5000/apache/skywalking-agent-sidecar:8.7.0
+          image: ik8share/skywalking-agent-sidecar:8.7.0
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: sw-agent

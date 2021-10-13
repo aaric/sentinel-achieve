@@ -83,29 +83,29 @@ dependencies {
 # stl-cloud-abc-backend
 cd stl-cloud-abc-backend/
 docker build --build-arg APP_NAME=stl-cloud-abc-backend --build-arg APP_VERSION=0.4.0-SNAPSHOT \
-  -t s1:5000/dev/stl-cloud-abc-backend:0.4.0-SNAPSHOT .
-docker tag s1:5000/dev/stl-cloud-abc-backend:0.4.0-SNAPSHOT \
-  s1:5000/dev/stl-cloud-abc-backend:latest
-docker push s1:5000/dev/stl-cloud-abc-backend:0.4.0-SNAPSHOT
-docker push s1:5000/dev/stl-cloud-abc-backend:latest
+  -t ik8share/stl-cloud-abc-backend:0.4.0-SNAPSHOT .
+docker tag ik8share/stl-cloud-abc-backend:0.4.0-SNAPSHOT \
+  ik8share/stl-cloud-abc-backend:latest
+docker push ik8share/stl-cloud-abc-backend:0.4.0-SNAPSHOT
+docker push ik8share/stl-cloud-abc-backend:latest
 
 # stl-cloud-client-backend
 cd stl-cloud-client-backend/
 docker build --build-arg APP_NAME=stl-cloud-client-backend --build-arg APP_VERSION=0.4.0-SNAPSHOT \
-  -t s1:5000/dev/stl-cloud-client-backend:0.4.0-SNAPSHOT .
-docker tag s1:5000/dev/stl-cloud-client-backend:0.4.0-SNAPSHOT \
-  s1:5000/dev/stl-cloud-client-backend:latest
-docker push s1:5000/dev/stl-cloud-client-backend:0.4.0-SNAPSHOT
-docker push s1:5000/dev/stl-cloud-client-backend:latest
+  -t ik8share/stl-cloud-client-backend:0.4.0-SNAPSHOT .
+docker tag ik8share/stl-cloud-client-backend:0.4.0-SNAPSHOT \
+  ik8share/stl-cloud-client-backend:latest
+docker push ik8share/stl-cloud-client-backend:0.4.0-SNAPSHOT
+docker push ik8share/stl-cloud-client-backend:latest
 
 # stl-cloud-gateway-backend
 cd stl-cloud-gateway-backend/
 docker build --build-arg APP_NAME=stl-cloud-gateway-backend --build-arg APP_VERSION=0.4.0-SNAPSHOT \
-  -t s1:5000/dev/stl-cloud-gateway-backend:0.4.0-SNAPSHOT .
-docker tag s1:5000/dev/stl-cloud-gateway-backend:0.4.0-SNAPSHOT \
-  s1:5000/dev/stl-cloud-gateway-backend:latest
-docker push s1:5000/dev/stl-cloud-gateway-backend:0.4.0-SNAPSHOT
-docker push s1:5000/dev/stl-cloud-gateway-backend:latest
+  -t ik8share/stl-cloud-gateway-backend:0.4.0-SNAPSHOT .
+docker tag ik8share/stl-cloud-gateway-backend:0.4.0-SNAPSHOT \
+  ik8share/stl-cloud-gateway-backend:latest
+docker push ik8share/stl-cloud-gateway-backend:0.4.0-SNAPSHOT
+docker push ik8share/stl-cloud-gateway-backend:latest
 ```
 
 ### 3.3 Kubernetes Deploy
