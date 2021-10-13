@@ -57,7 +57,27 @@ spring:
         dashboard: localhost:8710
 ```
 
-## 3 Docker Image
+## 3 SkyWalking: `apm-toolkit-logback-1.x`
+
+> [logback plugin](https://skywalking.apache.org/docs/skywalking-java/latest/en/setup/service-agent/java-agent/application-toolkit-logback-1.x)
+
+### 3.1 Project
+
+#### 3.1.1 build.gradle
+
+```groovy
+dependencies {
+    implementation "org.apache.skywalking:apm-toolkit-logback-1.x"
+}
+```
+
+#### 3.1.1 logback.xml
+
+- [`stl-cloud-abc-backend/src/main/resources/logback.xml`](stl-cloud-abc-backend/src/main/resources/logback.xml).
+- [`stl-cloud-client-backend/src/main/resources/logback.xml`](stl-cloud-client-backend/src/main/resources/logback.xml).
+- [`stl-cloud-gateway-backend/src/main/resources/logback.xml`](stl-cloud-gateway-backend/src/main/resources/logback.xml).
+
+### 3.2 Docker Image
 
 ```bash
 # stl-cloud-abc-backend
@@ -84,3 +104,7 @@ docker tag s1:5000/dev/stl-cloud-gateway-backend:0.4.0-SNAPSHOT s1:5000/dev/stl-
 docker push s1:5000/dev/stl-cloud-gateway-backend:0.4.0-SNAPSHOT
 docker push s1:5000/dev/stl-cloud-gateway-backend:latest
 ```
+
+### 3.3 Kubernetes Deploy
+
+&emsp;&emsp;[`deploy.yaml`](deploy.yaml).
