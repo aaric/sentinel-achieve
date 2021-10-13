@@ -73,9 +73,9 @@ dependencies {
 
 #### 3.1.1 logback.xml
 
-- [`stl-cloud-abc-backend/src/main/resources/logback.xml`](stl-cloud-abc-backend/src/main/resources/logback.xml).
-- [`stl-cloud-client-backend/src/main/resources/logback.xml`](stl-cloud-client-backend/src/main/resources/logback.xml).
-- [`stl-cloud-gateway-backend/src/main/resources/logback.xml`](stl-cloud-gateway-backend/src/main/resources/logback.xml).
+- [`stl-cloud-abc-backend/src/main/resources/logback.xml`](stl-cloud-abc-backend/src/main/resources/logback.xml)
+- [`stl-cloud-client-backend/src/main/resources/logback.xml`](stl-cloud-client-backend/src/main/resources/logback.xml)
+- [`stl-cloud-gateway-backend/src/main/resources/logback.xml`](stl-cloud-gateway-backend/src/main/resources/logback.xml)
 
 ### 3.2 Docker Image
 
@@ -110,4 +110,4 @@ docker push s1:5000/dev/stl-cloud-gateway-backend:latest
 
 ### 3.3 Kubernetes Deploy
 
-&emsp;&emsp;[`deploy.yaml`](deploy.yaml).
+&emsp;&emsp;[`deploy.yaml`](deploy.yaml)

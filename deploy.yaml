@@ -14,10 +14,48 @@ data:
   NACOS_SERVER_ADDR: 10.0.11.21:8848
   NACOS_NAMESPACE: public
   NACOS_GROUP: DEFAULT_GROUP
+  SENTINEL_TRANSPORT_DASHBOARD: "sentinel-dashboard:8710"
   JAVA_TOOL_OPTIONS: -javaagent:/usr/skywalking/agent/skywalking-agent.jar
   SW_AGENT_COLLECTOR_BACKEND_SERVICES: 10.0.11.21:11800
   SW_GRPC_LOG_SERVER_HOST: 10.0.11.21
   SW_GRPC_LOG_SERVER_PORT: "11800"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sentinel-dashboard
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sentinel-dashboard
+  template:
+    metadata:
+      labels:
+        app: sentinel-dashboard
+    spec:
+      containers:
+        - name: stl-cloud-client-backend
+          image: s1:5000/alibaba/sentinel-dashboard:1.8.1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8710
+      imagePullSecrets:
+        - name: harbor
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sentinel-dashboard
+spec:
+  selector:
+    app: sentinel-dashboard
+  type: NodePort
+  ports:
+    - name: http
+      port: 8710
+      targetPort: 8710
+      nodePort: 30710
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -104,7 +142,6 @@ spec:
           emptyDir: {}
       imagePullSecrets:
         - name: harbor
-
 ---
 apiVersion: apps/v1
 kind: Deployment
