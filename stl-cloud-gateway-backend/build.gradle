@@ -24,4 +24,6 @@ dependencies {
     implementation "com.alibaba.csp:sentinel-datasource-redis"
     implementation "com.alibaba.csp:sentinel-zuul-adapter"
 //    implementation "com.alibaba.csp:sentinel-spring-cloud-gateway-adapter"
+
+    implementation "org.apache.skywalking:apm-toolkit-logback-1.x"
 }

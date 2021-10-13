@@ -22,6 +22,7 @@ public class AbcController implements AbcApi {
     @GetMapping("/echo")
     @SentinelResource("abc-echo")
     public String echo() {
+        log.info("abc -> echo");
         return "echo";
     }
 }
