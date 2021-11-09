@@ -87,20 +87,24 @@ spring:
           - data-id: stl-spring-sentinel.yaml
             group: ${spring.cloud.nacos.config.group}
             refresh: true
-#    gateway:
-#      enabled: true
-#      discovery:
-#        locator:
-#          lower-case-service-id: true
-#      routes:
-#        - id: stl-cloud-abc-backend
-#          uri: lb://stl-cloud-abc-backend
-#          predicates:
-#            - Path=/api/abc/**
-#        - id: stl-cloud-client-backend
-#          uri: lb://stl-cloud-client-backend
-#          predicates:
-#            - Path=/api/client/**
+    gateway:
+      enabled: true
+      discovery:
+        locator:
+          lower-case-service-id: true
+      routes:
+        - id: stl-cloud-abc-backend
+          uri: lb://stl-cloud-abc-backend
+          predicates:
+            - Path=/api/abc/**
+          filters:
+            - StripPrefix=2
+        - id: stl-cloud-client-backend
+          uri: lb://stl-cloud-client-backend
+          predicates:
+            - Path=/api/client/**
+          filters:
+            - StripPrefix=2
     sentinel:
       transport:
         port: ${SENTINEL_TRANSPORT_PORT:8719}
