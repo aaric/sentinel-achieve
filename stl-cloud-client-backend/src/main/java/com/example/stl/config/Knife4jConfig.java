@@ -12,7 +12,7 @@ import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.net.InetAddress;
 import java.text.MessageFormat;
@@ -26,7 +26,7 @@ import java.util.Date;
  * @see com.github.xiaoymin.knife4j.spring.configuration.Knife4jAutoConfiguration
  */
 @EnableKnife4j
-@EnableSwagger2WebMvc
+@EnableSwagger2
 @Configuration
 public class Knife4jConfig implements InitializingBean {
 

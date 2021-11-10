@@ -1,3 +1,5 @@
+import org.springframework.util.FileSystemUtils
+
 plugins {
     id "java"
     id "io.freefair.lombok" version "4.1.6" apply false
@@ -13,7 +15,7 @@ allprojects {
         // https://github.com/alibaba/spring-cloud-alibaba/wiki/版本说明#毕业版本依赖关系推荐使用
         springCloudVersion = "Hoxton.SR9"
         springCloudAlibabaVersion = "2.2.6.RELEASE"
-        knife4jVersion = "2.0.9"
+        knife4jVersion = "3.0.3"
     }
 
     repositories {
@@ -109,7 +111,11 @@ subprojects {
             subProjectPath.list().each { filename ->
                 if (filename.endsWith(".log") || filename.equals("logs")) {
                     def logPath = new File(subProjectPath, filename)
-                    logPath.deleteOnExit()
+                    if (logPath.directory) {
+                        FileSystemUtils.deleteRecursively(logPath)
+                    } else {
+                        logPath.delete()
+                    }
                 }
             }
         }
