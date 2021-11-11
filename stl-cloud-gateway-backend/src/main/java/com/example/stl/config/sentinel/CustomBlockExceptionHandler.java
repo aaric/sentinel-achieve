@@ -41,40 +41,41 @@ public class CustomBlockExceptionHandler implements WebExceptionHandler {
     @Override
     public Mono<Void> handle(ServerWebExchange exchange, Throwable ex) {
         String route = exchange.getRequest().getPath().value();
-        String result = "";
+        Integer errCode = 501;
+        String errMsg = "";
 
         if (ex instanceof FlowException) {
             log.error("fallback: sentinel flow exception, route={}", route);
-            result = String.format("%d: %s", 501, "sentinel flow exception");
+            errMsg = String.format("%d: %s", errCode, "sentinel flow exception");
 
         } else if (ex instanceof ParamFlowException) {
             log.error("fallback: sentinel param flow exception, route={}", route);
-            result = String.format("%d: %s", 501, "sentinel param flow exception");
+            errMsg = String.format("%d: %s", errCode, "sentinel param flow exception");
 
         } else if (ex instanceof DegradeException) {
             log.error("fallback: sentinel degrade exception, route={}", route);
-            result = String.format("%d: %s", 501, "sentinel degrade exception");
+            errMsg = String.format("%d: %s", errCode, "sentinel degrade exception");
 
         } else if (ex instanceof AuthorityException) {
             log.error("fallback: sentinel authority exception, route={}", route);
-            result = String.format("%d: %s", 501, "sentinel authority exception");
+            errMsg = String.format("%d: %s", errCode, "sentinel authority exception");
 
         } else if (ex instanceof SystemBlockException) {
             log.error("fallback: sentinel system block exception, route={}", route);
-            result = String.format("%d: %s", 501, "sentinel system block exception");
+            errMsg = String.format("%d: %s", errCode, "sentinel system block exception");
 
         } else if (ex instanceof BlockException) {
             log.error("fallback: sentinel block exception, route={}", route);
-            result = String.format("%d: %s", 501, "sentinel block exception");
+            errMsg = String.format("%d: %s", errCode, "sentinel block exception");
 
         } else {
-            log.error("fallback: sentinel error, route={}", route);
-            result = String.format("%d: %s", 501, "default sentinel error");
+            log.error("fallback: default sentinel error, route={}", route);
+            errMsg = String.format("%d: %s", errCode, "default sentinel error");
         }
 
         ServerHttpResponse response = exchange.getResponse();
         response.getHeaders().add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-        DataBuffer buffer = response.bufferFactory().wrap(result.getBytes(StandardCharsets.UTF_8));
+        DataBuffer buffer = response.bufferFactory().wrap(errMsg.getBytes(StandardCharsets.UTF_8));
         return response.writeWith(Mono.just(buffer));
     }
 }
