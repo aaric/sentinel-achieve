@@ -92,6 +92,9 @@ spring:
       discovery:
         locator:
           lower-case-service-id: true
+#      default-filters:
+#        - AddResponseHeader=X-Response-Name, Value
+#        - AddRequestHeader=X-Request-Name, Value
       routes:
         - id: stl-cloud-abc-backend
           uri: lb://stl-cloud-abc-backend

@@ -11,7 +11,7 @@
 //import java.util.Optional;
 //
 ///**
-// * 自定义Knife4j Swagger端点配置
+// * 自定义Knife4j Swagger端点配置（不配置也可以）
 // *
 // * @author Aaric, created on 2021-11-10T16:13.
 // * @version 0.5.0-SNAPSHOT
