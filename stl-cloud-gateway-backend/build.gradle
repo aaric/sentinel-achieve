@@ -20,10 +20,10 @@ dependencies {
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery"
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config"
 
-//    implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-sentinel"
-//    implementation "com.alibaba.csp:sentinel-datasource-redis"
+    implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-sentinel"
+    implementation "com.alibaba.csp:sentinel-datasource-redis"
 //    implementation "com.alibaba.csp:sentinel-zuul-adapter"
-//    implementation "com.alibaba.csp:sentinel-spring-cloud-gateway-adapter"
+    implementation "com.alibaba.csp:sentinel-spring-cloud-gateway-adapter"
 
     implementation "org.apache.skywalking:apm-toolkit-logback-1.x"
 }

@@ -11,13 +11,13 @@
 //import java.util.Optional;
 //
 ///**
-// * 自定义Swagger端点配置
+// * 自定义Knife4j Swagger端点配置
 // *
 // * @author Aaric, created on 2021-11-10T16:13.
 // * @version 0.5.0-SNAPSHOT
 // */
 //@RestController
-//public class SwaggerHandlerConfig {
+//public class Knife4HandlerConfig {
 //
 //    @Autowired(required = false)
 //    private SecurityConfiguration securityConfiguration;
@@ -28,7 +28,7 @@
 //    private final SwaggerResourcesProvider swaggerResources;
 //
 //    @Autowired
-//    public SwaggerHandlerConfig(SwaggerResourcesProvider swaggerResources) {
+//    public Knife4HandlerConfig(SwaggerResourcesProvider swaggerResources) {
 //        this.swaggerResources = swaggerResources;
 //    }
 //
