@@ -6,6 +6,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 测试abc模块API接口控制器
@@ -22,7 +26,14 @@ public class AbcController implements AbcApi {
     @GetMapping("/echo")
     @SentinelResource("abc-echo")
     public String echo() {
-        log.info("abc -> echo");
+        HttpServletRequest request = getRequest();
+        log.info("{}, abc -> echo", request.getHeader("Authorization"));
         return "echo";
+    }
+
+    private static HttpServletRequest getRequest() {
+        return ((ServletRequestAttributes) RequestContextHolder
+                .getRequestAttributes())
+                .getRequest();
     }
 }
