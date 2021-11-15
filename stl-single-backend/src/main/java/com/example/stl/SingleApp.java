@@ -2,6 +2,7 @@ package com.example.stl;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
@@ -10,6 +11,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
  * @author Aaric, created on 2021-09-13T14:49.
  * @version 0.1.0-SNAPSHOT
  */
+@EnableFeignClients(basePackages = "com.example.stl.*")
 @SpringBootApplication
 @EnableAsync
 public class SingleApp {

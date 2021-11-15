@@ -3,9 +3,7 @@ package com.example.stl.api.test.impl;
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.example.stl.api.test.AbcApi;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -22,6 +20,12 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/v1/test/abc")
 public class AbcController implements AbcApi {
 
+    private static HttpServletRequest getRequest() {
+        return ((ServletRequestAttributes) RequestContextHolder
+                .getRequestAttributes())
+                .getRequest();
+    }
+
     @Override
     @GetMapping("/echo")
     @SentinelResource("abc-echo")
@@ -31,9 +35,31 @@ public class AbcController implements AbcApi {
         return "echo";
     }
 
-    private static HttpServletRequest getRequest() {
-        return ((ServletRequestAttributes) RequestContextHolder
-                .getRequestAttributes())
-                .getRequest();
+    @Override
+    @GetMapping("/httpGet")
+    public String httpGet(@RequestParam String key) {
+        log.info("httpGet -> key: {}", key);
+        return String.format("httpGet: %s", key);
+    }
+
+    @Override
+    @PostMapping("/httpPost")
+    public String httpPost(@RequestParam String key, @RequestParam String value) {
+        log.info("httpPost -> key: {}, value: {}", key, value);
+        return String.format("httpPost: %s-%s", key, value);
+    }
+
+    @Override
+    @PutMapping("/httpPut")
+    public String httpPut(@RequestParam String key, @RequestParam String value) {
+        log.info("httpPut -> key: {}, value: {}", key, value);
+        return String.format("httpPut: %s-%s", key, value);
+    }
+
+    @Override
+    @DeleteMapping("/httpDelete")
+    public String httpDelete(@RequestParam String key) {
+        log.info("httpDelete -> key: {}", key);
+        return String.format("httpDelete: %s", key);
     }
 }

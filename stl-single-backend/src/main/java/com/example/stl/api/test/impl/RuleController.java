@@ -13,7 +13,9 @@ import com.alibaba.csp.sentinel.slots.block.flow.param.ParamFlowRuleManager;
 import com.alibaba.csp.sentinel.slots.system.SystemRule;
 import com.alibaba.csp.sentinel.slots.system.SystemRuleManager;
 import com.example.stl.api.test.RuleApi;
+import com.example.stl.api.test.feign.AbcApiFeign;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,23 +34,27 @@ import java.util.Collections;
 @RequestMapping("/api/v1/test/rule")
 public class RuleController implements RuleApi {
 
+    @Autowired
+    private AbcApiFeign abcApiFeign;
+
     @Override
     @GetMapping("/flow")
     public boolean flow(@RequestParam String resName) {
-        try {
-            FlowRule flowRule = new FlowRule()
-                    // 限流策略：QPS
-                    .setGrade(RuleConstant.FLOW_GRADE_QPS)
-                    // 单机阈值
-                    .setCount(2);
-            flowRule.setResource(resName);
-            FlowRuleManager.loadRules(Collections.singletonList(flowRule));
-
-            return true;
-
-        } catch (Exception e) {
-            log.error("flow exception", e);
-        }
+        System.err.println(abcApiFeign.echo());
+//        try {
+//            FlowRule flowRule = new FlowRule()
+//                    // 限流策略：QPS
+//                    .setGrade(RuleConstant.FLOW_GRADE_QPS)
+//                    // 单机阈值
+//                    .setCount(2);
+//            flowRule.setResource(resName);
+//            FlowRuleManager.loadRules(Collections.singletonList(flowRule));
+//
+//            return true;
+//
+//        } catch (Exception e) {
+//            log.error("flow exception", e);
+//        }
         return false;
     }
 
