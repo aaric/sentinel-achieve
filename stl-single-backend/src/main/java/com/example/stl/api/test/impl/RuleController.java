@@ -40,21 +40,20 @@ public class RuleController implements RuleApi {
     @Override
     @GetMapping("/flow")
     public boolean flow(@RequestParam String resName) {
-        System.err.println(abcApiFeign.echo());
-//        try {
-//            FlowRule flowRule = new FlowRule()
-//                    // 限流策略：QPS
-//                    .setGrade(RuleConstant.FLOW_GRADE_QPS)
-//                    // 单机阈值
-//                    .setCount(2);
-//            flowRule.setResource(resName);
-//            FlowRuleManager.loadRules(Collections.singletonList(flowRule));
-//
-//            return true;
-//
-//        } catch (Exception e) {
-//            log.error("flow exception", e);
-//        }
+        try {
+            FlowRule flowRule = new FlowRule()
+                    // 限流策略：QPS
+                    .setGrade(RuleConstant.FLOW_GRADE_QPS)
+                    // 单机阈值
+                    .setCount(2);
+            flowRule.setResource(resName);
+            FlowRuleManager.loadRules(Collections.singletonList(flowRule));
+
+            return true;
+
+        } catch (Exception e) {
+            log.error("flow exception", e);
+        }
         return false;
     }
 
