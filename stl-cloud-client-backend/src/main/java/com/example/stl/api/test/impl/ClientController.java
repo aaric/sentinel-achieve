@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  * 测试client模块API接口控制器
  *
  * @author Aaric, created on 2021-09-14T14:18.
- * @version 0.3.0-SNAPSHOT
+ * @version 0.5.1-SNAPSHOT
  */
 @Slf4j
 @RestController
