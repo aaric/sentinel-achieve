@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -24,11 +25,11 @@ public class ClientController implements ClientApi {
     private AbcApiFeign abcApiFeign;
 
     @Override
-    @GetMapping("/httpEcho")
-    @SentinelResource("client-http-echo")
-    public String httpEcho() {
-        String echo = abcApiFeign.echo();
-        log.info("client -> httpEcho: {}", echo);
-        return "httpEcho: " + echo;
+    @GetMapping("/get")
+    @SentinelResource("client-get")
+    public String get(@RequestParam Long id) {
+        String name = abcApiFeign.httpGet(id);
+        log.info("client -> {}: {}", id, name);
+        return String.format("client -> %s", name);
     }
 }

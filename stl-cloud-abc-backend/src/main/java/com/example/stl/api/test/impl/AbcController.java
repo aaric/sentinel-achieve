@@ -1,8 +1,8 @@
 package com.example.stl.api.test.impl;
 
-import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.example.stl.api.test.AbcApi;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -27,39 +27,32 @@ public class AbcController implements AbcApi {
     }
 
     @Override
-    @GetMapping("/echo")
-    @SentinelResource("abc-echo")
-    public String echo() {
-        HttpServletRequest request = getRequest();
-        log.info("{}, abc -> echo", request.getHeader("Authorization"));
-        return "echo";
-    }
-
-    @Override
     @GetMapping("/httpGet")
-    public String httpGet(@RequestParam String key) {
-        log.info("httpGet -> key: {}", key);
-        return String.format("httpGet: %s", key);
+    public String httpGet(@RequestParam Long id) {
+        HttpServletRequest request = getRequest();
+        log.info("httpGet -> {}: {}", HttpHeaders.AUTHORIZATION, request.getHeader(HttpHeaders.AUTHORIZATION));
+        log.info("httpGet -> id: {}", id);
+        return String.format("httpGet -> %s", id);
     }
 
     @Override
     @PostMapping("/httpPost")
-    public String httpPost(@RequestParam String key, @RequestParam String value) {
-        log.info("httpPost -> key: {}, value: {}", key, value);
-        return String.format("httpPost: %s-%s", key, value);
+    public String httpPost(@RequestParam Long id, @RequestParam String name) {
+        log.info("httpPost -> id: {}, value: {}", id, name);
+        return String.format("httpPost -> %s-%s", id, name);
     }
 
     @Override
     @PutMapping("/httpPut")
-    public String httpPut(@RequestParam String key, @RequestParam String value) {
-        log.info("httpPut -> key: {}, value: {}", key, value);
-        return String.format("httpPut: %s-%s", key, value);
+    public String httpPut(@RequestParam Long id, @RequestParam String name) {
+        log.info("httpPut -> id: {}, value: {}", id, name);
+        return String.format("httpPut -> %s-%s", id, name);
     }
 
     @Override
     @DeleteMapping("/httpDelete")
-    public String httpDelete(@RequestParam String key) {
-        log.info("httpDelete -> key: {}", key);
-        return String.format("httpDelete: %s", key);
+    public String httpDelete(@RequestParam Long id) {
+        log.info("httpDelete -> id: {}", id);
+        return String.format("httpDelete -> %s", id);
     }
 }

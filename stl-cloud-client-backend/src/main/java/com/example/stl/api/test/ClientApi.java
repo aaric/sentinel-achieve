@@ -2,6 +2,7 @@ package com.example.stl.api.test;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 /**
  * 测试client模块API接口
@@ -12,6 +13,6 @@ import io.swagger.annotations.ApiOperation;
 @Api(tags = "测试client模块API")
 public interface ClientApi {
 
-    @ApiOperation("httpEcho")
-    String httpEcho();
+    @ApiOperation("get")
+    String get(@ApiParam(value = "id", example = "1") Long id);
 }

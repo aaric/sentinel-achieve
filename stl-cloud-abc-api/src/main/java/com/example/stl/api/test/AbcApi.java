@@ -3,7 +3,7 @@ package com.example.stl.api.test;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 测试abc模块API接口
@@ -14,21 +14,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Api(tags = "测试abc模块API")
 public interface AbcApi {
 
-    @ApiOperation("echo")
-    @GetMapping("/v1/test/abc/echo")
-    String echo();
-
     @ApiOperation("httpGet")
-    String httpGet(@ApiParam(value = "key", example = "abc") String key);
+    @GetMapping("/v1/test/abc/httpGet")
+    String httpGet(@ApiParam(name = "id", example = "1") @RequestParam Long id);
 
     @ApiOperation("httpPost")
-    String httpPost(@ApiParam(value = "key", example = "abc") String key,
-                    @ApiParam(value = "value", example = "123456") String value);
+    @PostMapping("/v1/test/abc/httpPost")
+    String httpPost(@ApiParam(name = "id", example = "1") @RequestParam Long id,
+                    @ApiParam(name = "name", example = "monkey") @RequestParam String name);
 
     @ApiOperation("httpPut")
-    String httpPut(@ApiParam(value = "key", example = "abc") String key,
-                   @ApiParam(value = "value", example = "123456") String value);
+    @PutMapping("/v1/test/abc/httpPut")
+    String httpPut(@ApiParam(name = "id", example = "1") @RequestParam Long id,
+                   @ApiParam(name = "name", example = "monkey") @RequestParam String name);
 
     @ApiOperation("httpDelete")
-    String httpDelete(@ApiParam(value = "key", example = "abc") String key);
+    @DeleteMapping("/v1/test/abc/httpDelete")
+    String httpDelete(@ApiParam(name = "id", example = "1") @RequestParam Long id);
 }
