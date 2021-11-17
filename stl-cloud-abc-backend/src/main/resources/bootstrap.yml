@@ -1,6 +1,10 @@
 # Undertow settings
 server:
   port: ${SERVER_PORT:8100}
+  servlet:
+    multipart:
+      max-file-size: ${SERVLET_MULTIPART_MAX_FILE_SIZE:200MB}
+      max-request-size: ${SERVLET_MULTIPART_MAX_REQUEST_SIZE:1GB}
   undertow:
     threads:
       io: ${UNDERTOW_IO_THREADS:1}
@@ -51,7 +55,7 @@ knife4j:
   document:
     title: 在线API文档
     description: Alibaba Sentinel 框架集成测试 - abc应用
-    version: 0.4.0
+    version: 0.5.1
     developer:
       name: Aaric
       url: http://github.com/aaric

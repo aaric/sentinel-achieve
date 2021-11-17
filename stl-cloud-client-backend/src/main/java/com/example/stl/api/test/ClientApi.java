@@ -14,5 +14,5 @@ import io.swagger.annotations.ApiParam;
 public interface ClientApi {
 
     @ApiOperation("get")
-    String get(@ApiParam(value = "id", example = "1") Long id);
+    String get(@ApiParam(value = "ID", example = "1") Long id);
 }

@@ -3,12 +3,16 @@ package com.example.stl.api.test.impl;
 import com.example.stl.api.test.AbcApi;
 import com.example.stl.pojo.IdName;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * 测试abc模块API接口控制器
@@ -42,6 +46,26 @@ public class AbcController implements AbcApi {
     public String httpPostJson(@RequestBody IdName idName) {
         log.info("httpPostJson -> id: {}, value: {}", idName.getId(), idName.getName());
         return String.format("httpPost -> %s-%s", idName.getId(), idName.getName());
+    }
+
+    @Override
+    @PostMapping("/httpPostFile")
+    public String httpPostFile(@RequestPart MultipartFile uploadFile) {
+        try {
+            String storagePath = FileUtils.getTempDirectoryPath();
+            String fileName = uploadFile.getOriginalFilename();
+            log.info("httpPostFile -> storagePath: {}, fileName: {}", storagePath, fileName);
+
+            File storageFile = new File(storagePath, fileName);
+            uploadFile.transferTo(storageFile);
+
+            return storageFile.getAbsolutePath();
+
+        } catch (IOException e) {
+            log.error("httpPostFile exception", e);
+        }
+
+        return "error";
     }
 
     @Override

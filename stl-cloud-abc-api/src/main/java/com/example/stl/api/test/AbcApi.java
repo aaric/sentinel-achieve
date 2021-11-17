@@ -5,6 +5,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 测试abc模块API接口
@@ -17,23 +18,27 @@ public interface AbcApi {
 
     @ApiOperation("httpGet")
     @GetMapping("/v1/test/abc/httpGet")
-    String httpGet(@ApiParam(name = "id", example = "1") @RequestParam Long id);
+    String httpGet(@ApiParam(value = "ID", example = "1") @RequestParam Long id);
 
-    @ApiOperation("httpPost - not used")
+    @ApiOperation("httpPost")
     @PostMapping("/v1/test/abc/httpPost")
-    String httpPost(@ApiParam(name = "id", example = "1") @RequestParam Long id,
-                    @ApiParam(name = "name", example = "monkey") @RequestParam String name);
+    String httpPost(@ApiParam(value = "ID", example = "1") @RequestParam Long id,
+                    @ApiParam(value = "Name", example = "monkey") @RequestParam String name);
 
     @ApiOperation("httpPostJson")
     @PostMapping("/v1/test/abc/httpPostJson")
     String httpPostJson(@RequestBody IdName idName);
 
-    @ApiOperation("httpPut - not used")
+    @ApiOperation("httpPostFile")
+    @PostMapping("/v1/test/abc/httpPostFile")
+    String httpPostFile(@ApiParam(value = "File(size<200MB)", required = true) @RequestPart MultipartFile uploadFile);
+
+    @ApiOperation("httpPut")
     @PutMapping("/v1/test/abc/httpPut")
-    String httpPut(@ApiParam(name = "id", example = "1") @RequestParam Long id,
-                   @ApiParam(name = "name", example = "monkey") @RequestParam String name);
+    String httpPut(@ApiParam(value = "ID", example = "1") @RequestParam Long id,
+                   @ApiParam(value = "Name", example = "monkey") @RequestParam String name);
 
     @ApiOperation("httpDelete")
     @DeleteMapping("/v1/test/abc/httpDelete")
-    String httpDelete(@ApiParam(name = "id", example = "1") @RequestParam Long id);
+    String httpDelete(@ApiParam(value = "ID", example = "1") @RequestParam Long id);
 }

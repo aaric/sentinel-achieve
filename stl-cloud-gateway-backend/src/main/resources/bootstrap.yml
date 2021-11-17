@@ -93,9 +93,9 @@ spring:
         locator:
           enabled: true
           lower-case-service-id: true
-#      default-filters:
-#        - AddResponseHeader=X-Response-Name, Value
-#        - AddRequestHeader=X-Request-Name, Value
+#      httpclient:
+#        connect-timeout: 3000
+#        response-timeout: 5s
       globalcors:
         cors-configurations:
           '[/**]':
@@ -106,19 +106,22 @@ spring:
               - POST
               - PUT
               - DELETE
-      routes:
-        - id: stl-cloud-abc-backend
-          uri: lb://stl-cloud-abc-backend
-          predicates:
-            - Path=/api/abc/**
-          filters:
-            - StripPrefix=2
-        - id: stl-cloud-client-backend
-          uri: lb://stl-cloud-client-backend
-          predicates:
-            - Path=/api/client/**
-          filters:
-            - StripPrefix=2
+#      default-filters:
+#        - AddResponseHeader=X-Response-Name, Value
+#        - AddRequestHeader=X-Request-Name, Value
+#      routes:
+#        - id: stl-cloud-abc-backend
+#          uri: lb://stl-cloud-abc-backend
+#          predicates:
+#            - Path=/api/abc/**
+#          filters:
+#            - StripPrefix=2
+#        - id: stl-cloud-client-backend
+#          uri: lb://stl-cloud-client-backend
+#          predicates:
+#            - Path=/api/client/**
+#          filters:
+#            - StripPrefix=2
     sentinel:
       transport:
         port: ${SENTINEL_TRANSPORT_PORT:8719}
