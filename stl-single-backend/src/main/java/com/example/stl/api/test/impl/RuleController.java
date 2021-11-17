@@ -13,7 +13,9 @@ import com.alibaba.csp.sentinel.slots.block.flow.param.ParamFlowRuleManager;
 import com.alibaba.csp.sentinel.slots.system.SystemRule;
 import com.alibaba.csp.sentinel.slots.system.SystemRuleManager;
 import com.example.stl.api.test.RuleApi;
+import com.example.stl.api.test.feign.AbcApiFeign;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,6 +33,9 @@ import java.util.Collections;
 @RestController
 @RequestMapping("/api/v1/test/rule")
 public class RuleController implements RuleApi {
+
+    @Autowired
+    private AbcApiFeign abcApiFeign;
 
     @Override
     @GetMapping("/flow")

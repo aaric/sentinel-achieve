@@ -14,4 +14,8 @@ dependencies {
 
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-sentinel"
     implementation "com.alibaba.csp:sentinel-datasource-redis"
+
+
+    implementation project(":stl-cloud-abc-api")
+    implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
 }

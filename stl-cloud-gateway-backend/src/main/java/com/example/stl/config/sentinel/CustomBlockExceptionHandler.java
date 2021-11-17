@@ -71,6 +71,7 @@ public class CustomBlockExceptionHandler implements WebExceptionHandler {
         } else {
             log.error("fallback: default sentinel error, route={}", route);
             errMsg = String.format("%d: %s", errCode, "default sentinel error");
+            log.error("handle exception", ex);
         }
 
         ServerHttpResponse response = exchange.getResponse();

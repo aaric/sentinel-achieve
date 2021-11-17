@@ -10,5 +10,6 @@ import org.springframework.cloud.openfeign.FeignClient;
  * @version 0.3.0-SNAPSHOT
  */
 @FeignClient(value = "stl-cloud-abc-backend")
+//@FeignClient(value = "${feign.custom-routes.app.name}", url = "${feign.custom-routes.app.url}")
 public interface AbcApiFeign extends AbcApi {
 }
