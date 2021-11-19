@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @Slf4j
 @RestController
-@RequestMapping("/v1/test/client")
+@RequestMapping("/api/client/v1/test/client")
 public class ClientController implements ClientApi {
 
     @Autowired

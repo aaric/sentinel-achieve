@@ -9,6 +9,7 @@ import com.alibaba.csp.sentinel.slots.system.SystemBlockException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.codec.HttpMessageWriter;
 import org.springframework.http.codec.ServerCodecConfigurer;
@@ -19,6 +20,7 @@ import org.springframework.web.server.WebExceptionHandler;
 import reactor.core.publisher.Mono;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -29,6 +31,8 @@ import java.util.List;
  */
 @Slf4j
 public class CustomBlockExceptionHandler implements WebExceptionHandler {
+
+    private static final String[] CUSTOM_WHITE_ROUTES = {"/favicon.ico"};
 
     private List<ViewResolver> viewResolvers;
     private List<HttpMessageWriter<?>> messageWriters;
@@ -42,41 +46,46 @@ public class CustomBlockExceptionHandler implements WebExceptionHandler {
     public Mono<Void> handle(ServerWebExchange exchange, Throwable ex) {
         String route = exchange.getRequest().getPath().value();
         Integer errCode = 501;
-        String errMsg = "";
-
-        if (ex instanceof FlowException) {
-            log.error("fallback: sentinel flow exception, route={}", route);
-            errMsg = String.format("%d: %s", errCode, "sentinel flow exception");
-
-        } else if (ex instanceof ParamFlowException) {
-            log.error("fallback: sentinel param flow exception, route={}", route);
-            errMsg = String.format("%d: %s", errCode, "sentinel param flow exception");
-
-        } else if (ex instanceof DegradeException) {
-            log.error("fallback: sentinel degrade exception, route={}", route);
-            errMsg = String.format("%d: %s", errCode, "sentinel degrade exception");
-
-        } else if (ex instanceof AuthorityException) {
-            log.error("fallback: sentinel authority exception, route={}", route);
-            errMsg = String.format("%d: %s", errCode, "sentinel authority exception");
-
-        } else if (ex instanceof SystemBlockException) {
-            log.error("fallback: sentinel system block exception, route={}", route);
-            errMsg = String.format("%d: %s", errCode, "sentinel system block exception");
-
-        } else if (ex instanceof BlockException) {
-            log.error("fallback: sentinel block exception, route={}", route);
-            errMsg = String.format("%d: %s", errCode, "sentinel block exception");
-
-        } else {
-            log.error("fallback: default sentinel error, route={}", route);
-            errMsg = String.format("%d: %s", errCode, "default sentinel error");
-            log.error("handle exception", ex);
-        }
+        String errMsg = "default error";
 
         ServerHttpResponse response = exchange.getResponse();
-        response.getHeaders().add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-        DataBuffer buffer = response.bufferFactory().wrap(errMsg.getBytes(StandardCharsets.UTF_8));
-        return response.writeWith(Mono.just(buffer));
+        if (Arrays.asList(CUSTOM_WHITE_ROUTES).contains(route)) {
+            response.setStatusCode(HttpStatus.OK);
+            return Mono.empty();
+        } else {
+            if (ex instanceof FlowException) {
+                log.error("fallback: sentinel flow exception, route={}", route);
+                errMsg = String.format("%d: %s", errCode, "sentinel flow exception");
+
+            } else if (ex instanceof ParamFlowException) {
+                log.error("fallback: sentinel param flow exception, route={}", route);
+                errMsg = String.format("%d: %s", errCode, "sentinel param flow exception");
+
+            } else if (ex instanceof DegradeException) {
+                log.error("fallback: sentinel degrade exception, route={}", route);
+                errMsg = String.format("%d: %s", errCode, "sentinel degrade exception");
+
+            } else if (ex instanceof AuthorityException) {
+                log.error("fallback: sentinel authority exception, route={}", route);
+                errMsg = String.format("%d: %s", errCode, "sentinel authority exception");
+
+            } else if (ex instanceof SystemBlockException) {
+                log.error("fallback: sentinel system block exception, route={}", route);
+                errMsg = String.format("%d: %s", errCode, "sentinel system block exception");
+
+            } else if (ex instanceof BlockException) {
+                log.error("fallback: sentinel block exception, route={}", route);
+                errMsg = String.format("%d: %s", errCode, "sentinel block exception");
+
+            } else {
+                log.error("fallback: default sentinel error, route={}", route);
+                errMsg = String.format("%d: %s", errCode, "default sentinel error");
+                /*log.error("handle exception", ex);*/
+            }
+
+            response.getHeaders().add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+            DataBuffer buffer = response.bufferFactory().wrap(errMsg.getBytes(StandardCharsets.UTF_8));
+            return response.writeWith(Mono.just(buffer));
+        }
     }
 }

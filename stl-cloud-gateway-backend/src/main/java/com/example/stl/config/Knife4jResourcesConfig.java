@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import springfox.documentation.swagger.web.SwaggerResource;
 import springfox.documentation.swagger.web.SwaggerResourcesProvider;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -49,8 +50,8 @@ public class Knife4jResourcesConfig implements SwaggerResourcesProvider {
             route.getPredicates().stream()
                     .filter(predicateDefinition -> "Path".equalsIgnoreCase(predicateDefinition.getName()))
                     .forEach(predicateDefinition -> resources.add(swaggerResource(route.getId(),
-                            predicateDefinition.getArgs().get(NameUtils.GENERATED_NAME_PREFIX + "0").replace("**", "v2/api-docs"),
-                            "2.0")));
+                            predicateDefinition.getArgs().get(NameUtils.GENERATED_NAME_PREFIX + BigDecimal.ZERO).replace("**", "v2/api-docs"),
+                            "3.0")));
         });
 
         return resources;
@@ -65,6 +66,7 @@ public class Knife4jResourcesConfig implements SwaggerResourcesProvider {
      * @return
      */
     private SwaggerResource swaggerResource(String name, String location, String version) {
+        log.debug("SwaggerResource -> name: {}, location: {}, version: {}", name, location, version);
         SwaggerResource resource = new SwaggerResource();
         resource.setName(name);
         resource.setLocation(location);

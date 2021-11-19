@@ -94,7 +94,7 @@ spring:
           enabled: true
           lower-case-service-id: true
 #      httpclient:
-#        connect-timeout: 3000
+#        connect-timeout: 45000
 #        response-timeout: 5s
       globalcors:
         cors-configurations:
@@ -115,25 +115,14 @@ spring:
 #          predicates:
 #            - Path=/api/abc/**
 #          filters:
-#            - StripPrefix=2
+#            - RewritePath=/api/abc/v2/api-docs, /v2/api-docs
 #        - id: stl-cloud-client-backend
 #          uri: lb://stl-cloud-client-backend
 #          predicates:
 #            - Path=/api/client/**
 #          filters:
-#            - StripPrefix=2
+#            - RewritePath=/api/client/v2/api-docs, /v2/api-docs
     sentinel:
       transport:
         port: ${SENTINEL_TRANSPORT_PORT:8719}
         dashboard: ${SENTINEL_TRANSPORT_DASHBOARD:localhost:8710}
-
-# Zuul settings
-#zuul:
-#  sensitive-headers: Cookie,Set-Cookie
-#  routes:
-#    stl-cloud-abc-backend:
-#      path: /api/abc/**
-#      service-id: stl-cloud-abc-backend
-#    stl-cloud-client-backend:
-#      path: /api/client/**
-#      service-id: stl-cloud-client-backend

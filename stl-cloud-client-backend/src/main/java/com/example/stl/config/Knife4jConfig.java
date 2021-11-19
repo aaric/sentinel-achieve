@@ -99,7 +99,7 @@ public class Knife4jConfig implements InitializingBean {
                 .description(description)
                 .in(parameterType)
                 .example(new Example(null, null, null, example, null, null))
-                //.query(q -> q.model(m -> m.scalarModel(ScalarType.STRING)))
+                /*.query(q -> q.model(m -> m.scalarModel(ScalarType.STRING)))*/
                 .query(parameter -> parameter.model(model -> model.scalarModel(ScalarType.STRING)))
                 .required(required)
                 .build();
@@ -116,7 +116,7 @@ public class Knife4jConfig implements InitializingBean {
                 new AuthorizationScope[]{new AuthorizationScope("global", "Bearer 令牌字符串")}));
         SecurityContext securityContext = SecurityContext.builder()
                 .securityReferences(securityReferences)
-                .operationSelector(selector -> selector.requestMappingPattern().matches("/.*"))
+                .operationSelector(selector -> selector.requestMappingPattern().matches(".*"))
                 .build();
         return Arrays.asList(securityContext);
     }
