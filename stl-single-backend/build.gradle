@@ -1,4 +1,6 @@
 dependencies {
+    implementation project(":stl-cloud-abc-api")
+
     implementation "com.github.xiaoymin:knife4j-spring-boot-starter"
 
     implementation("org.springframework.boot:spring-boot-starter-web") {
@@ -15,7 +17,5 @@ dependencies {
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-sentinel"
     implementation "com.alibaba.csp:sentinel-datasource-redis"
 
-
-    implementation project(":stl-cloud-abc-api")
     implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
 }
