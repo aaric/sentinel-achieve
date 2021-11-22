@@ -14,7 +14,6 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 @SpringBootApplication
 @EnableDiscoveryClient
 @RefreshScope
-//@EnableZuulProxy
 public class GatewayApp {
 
     /**

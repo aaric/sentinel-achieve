@@ -91,6 +91,12 @@ spring:
         port: ${SENTINEL_TRANSPORT_PORT:8719}
         dashboard: ${SENTINEL_TRANSPORT_DASHBOARD:localhost:8710}
 
+# Feign settings
+feign:
+  custom-routes:
+    gateway:
+      url: null
+
 # Client settings
 client:
   data-id: stl-cloud-client-backend

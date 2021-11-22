@@ -22,7 +22,7 @@ import java.io.IOException;
  */
 @Slf4j
 @RestController
-@RequestMapping("/v1/test/abc")
+@RequestMapping("/api/abc/v1/test/abc")
 public class AbcController implements AbcApi {
 
     @Override
