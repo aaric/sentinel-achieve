@@ -89,6 +89,8 @@ spring:
             refresh: true
     gateway:
       enabled: true
+      x-forwarded:
+        prefix-enabled: false
       discovery:
         locator:
           enabled: true
