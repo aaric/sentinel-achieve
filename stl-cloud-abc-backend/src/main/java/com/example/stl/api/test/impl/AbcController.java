@@ -53,10 +53,13 @@ public class AbcController implements AbcApi {
         try {
             String storagePath = System.getProperty("java.io.tmpdir");
             String fileName = uploadFile.getOriginalFilename();
-            log.info("httpPostFile -> storagePath: {}, fileName: {}", storagePath, fileName);
-
             File storageFile = new File(storagePath, fileName);
+            if (storageFile.exists()) {
+                storageFile.deleteOnExit();
+            }
+
             uploadFile.transferTo(storageFile);
+            log.info("httpPostFile -> storagePath: {}, fileName: {}", storagePath, fileName);
 
             return storageFile.getAbsolutePath();
 
