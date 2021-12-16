@@ -54,11 +54,8 @@ public class AbcController implements AbcApi {
             String storagePath = System.getProperty("java.io.tmpdir");
             String fileName = uploadFile.getOriginalFilename();
             File storageFile = new File(storagePath, fileName);
-            if (storageFile.exists()) {
-                storageFile.deleteOnExit();
-            }
-
             uploadFile.transferTo(storageFile);
+
             log.info("httpPostFile -> storagePath: {}, fileName: {}", storagePath, fileName);
 
             return storageFile.getAbsolutePath();
