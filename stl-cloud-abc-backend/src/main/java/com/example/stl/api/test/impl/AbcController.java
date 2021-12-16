@@ -3,7 +3,6 @@ package com.example.stl.api.test.impl;
 import com.example.stl.api.test.AbcApi;
 import com.example.stl.pojo.IdName;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.FileUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -52,7 +51,7 @@ public class AbcController implements AbcApi {
     @PostMapping("/httpPostFile")
     public String httpPostFile(@RequestPart MultipartFile uploadFile) {
         try {
-            String storagePath = FileUtils.getTempDirectoryPath();
+            String storagePath = System.getProperty("java.io.tmpdir");
             String fileName = uploadFile.getOriginalFilename();
             log.info("httpPostFile -> storagePath: {}, fileName: {}", storagePath, fileName);
 
