@@ -23,43 +23,6 @@ data:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: sentinel-dashboard
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: sentinel-dashboard
-  template:
-    metadata:
-      labels:
-        app: sentinel-dashboard
-    spec:
-      containers:
-        - name: stl-cloud-client-backend
-          image: s1:5000/apache/sentinel-dashboard:1.8.1
-          imagePullPolicy: IfNotPresent
-          ports:
-            - containerPort: 8710
-      imagePullSecrets:
-        - name: harbor
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: sentinel-dashboard
-spec:
-  selector:
-    app: sentinel-dashboard
-  type: NodePort
-  ports:
-    - name: http
-      port: 8710
-      targetPort: 8710
-      nodePort: 30710
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
   name: stl-cloud-abc-backend
 spec:
   replicas: 1
