@@ -162,3 +162,42 @@ spec:
       port: 8000
       targetPort: 8000
       nodePort: 30800
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-frontend
+  labels:
+    app: hello-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-frontend
+  template:
+    metadata:
+      labels:
+        app: hello-frontend
+    spec:
+      containers:
+        - name: hello-frontend
+          image: s1:5000/dev/hello-frontend:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+      imagePullSecrets:
+        - name: harbor
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-frontend
+spec:
+  selector:
+    app: hello-frontend
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+      nodePort: 30900
