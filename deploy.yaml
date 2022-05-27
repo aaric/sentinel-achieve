@@ -36,7 +36,7 @@ spec:
     spec:
       containers:
         - name: stl-cloud-client-backend
-          image: ik8share/sentinel-dashboard:1.8.1
+          image: s1:5000/apache/sentinel-dashboard:1.8.1
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8710
@@ -73,7 +73,7 @@ spec:
     spec:
       initContainers:
         - name: skywalking-agent-sidecar
-          image: ik8share/skywalking-agent-sidecar:8.7.0
+          image: s1:5000/apache/skywalking-agent-sidecar:8.7.0
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: sw-agent
@@ -116,7 +116,7 @@ spec:
     spec:
       initContainers:
         - name: skywalking-agent-sidecar
-          image: ik8share/skywalking-agent-sidecar:8.7.0
+          image: s1:5000/apache/skywalking-agent-sidecar:8.7.0
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: sw-agent
@@ -159,7 +159,7 @@ spec:
     spec:
       initContainers:
         - name: skywalking-agent-sidecar
-          image: ik8share/skywalking-agent-sidecar:8.7.0
+          image: s1:5000/apache/skywalking-agent-sidecar:8.7.0
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: sw-agent
