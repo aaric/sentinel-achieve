@@ -82,7 +82,7 @@ dependencies {
 ```bash
 # stl-cloud-abc-backend
 cd stl-cloud-abc-backend/
-docker build --build-arg APP_NAME=stl-cloud-abc-backend --build-arg APP_VERSION=0.4.0-SNAPSHOT \
+docker build --build-arg APP_NAME=stl-cloud-abc-backend --build-arg APP_VERSION=0.6.0-SNAPSHOT \
   -t ik8share/stl-cloud-abc-backend:0.6.0-SNAPSHOT .
 docker tag ik8share/stl-cloud-abc-backend:0.6.0-SNAPSHOT \
   ik8share/stl-cloud-abc-backend:latest
