@@ -11,51 +11,14 @@ kind: ConfigMap
 metadata:
   name: project-env
 data:
-  NACOS_SERVER_ADDR: 127.0.0.1:8848
+  NACOS_SERVER_ADDR: 10.0.11.21:8848
   NACOS_NAMESPACE: public
   NACOS_GROUP: DEFAULT_GROUP
   SENTINEL_TRANSPORT_DASHBOARD: "sentinel-dashboard:8710"
   JAVA_TOOL_OPTIONS: -javaagent:/usr/skywalking/agent/skywalking-agent.jar
-  SW_AGENT_COLLECTOR_BACKEND_SERVICES: 127.0.0.1:11800
-  SW_GRPC_LOG_SERVER_HOST: 127.0.0.1
+  SW_AGENT_COLLECTOR_BACKEND_SERVICES: 10.0.11.21:11800
+  SW_GRPC_LOG_SERVER_HOST: 10.0.11.21
   SW_GRPC_LOG_SERVER_PORT: "11800"
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: sentinel-dashboard
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: sentinel-dashboard
-  template:
-    metadata:
-      labels:
-        app: sentinel-dashboard
-    spec:
-      containers:
-        - name: stl-cloud-client-backend
-          image: ik8share/sentinel-dashboard:1.8.1
-          imagePullPolicy: IfNotPresent
-          ports:
-            - containerPort: 8710
-      imagePullSecrets:
-        - name: harbor
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: sentinel-dashboard
-spec:
-  selector:
-    app: sentinel-dashboard
-  type: NodePort
-  ports:
-    - name: http
-      port: 8710
-      targetPort: 8710
-      nodePort: 30710
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -73,7 +36,7 @@ spec:
     spec:
       initContainers:
         - name: skywalking-agent-sidecar
-          image: ik8share/skywalking-agent-sidecar:8.7.0
+          image: s1:5000/apache/skywalking-agent-sidecar:8.7.0
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: sw-agent
@@ -116,7 +79,7 @@ spec:
     spec:
       initContainers:
         - name: skywalking-agent-sidecar
-          image: ik8share/skywalking-agent-sidecar:8.7.0
+          image: s1:5000/apache/skywalking-agent-sidecar:8.7.0
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: sw-agent
@@ -159,7 +122,7 @@ spec:
     spec:
       initContainers:
         - name: skywalking-agent-sidecar
-          image: ik8share/skywalking-agent-sidecar:8.7.0
+          image: s1:5000/apache/skywalking-agent-sidecar:8.7.0
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: sw-agent
@@ -199,3 +162,68 @@ spec:
       port: 8000
       targetPort: 8000
       nodePort: 30800
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-frontend
+  labels:
+    app: hello-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-frontend
+  template:
+    metadata:
+      labels:
+        app: hello-frontend
+    spec:
+      containers:
+        - name: hello-frontend
+          image: s1:5000/dev/hello-frontend:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+      imagePullSecrets:
+        - name: harbor
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-frontend
+spec:
+  selector:
+    app: hello-frontend
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+      nodePort: 30900
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hello-project
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: "2048M"
+spec:
+  rules:
+    - host: hello-project.custom
+      http:
+        paths:
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: stl-cloud-gateway-backend
+                port:
+                  number: 8000
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: hello-frontend
+                port:
+                  number: 80
